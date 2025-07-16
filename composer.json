@@ -1,5 +1,5 @@
 {
-    "name": "bluemind/laravelcorekit",
+    "name": "bluemindfoundation/laravelcorekit",
     "description": "CoreKit provides a centralized set of helpers, response macros, and enums for shared use across Laravel applications.",
     "type": "library",
     "license": "MIT",
