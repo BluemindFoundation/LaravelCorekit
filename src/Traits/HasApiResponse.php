@@ -20,12 +20,17 @@ trait HasApiResponse
     ): JsonResponse {
         $message = $customMessage ?? TranslatorUtil::message($status->value);
 
-        $response = array_merge([
+        $response = [
             'status' => $status->value,
             'success' => $success,
             'message' => $message,
-            'data' => $data,
-        ], $extra);
+        ];
+
+        if ($data !== null) {
+            $response['data'] = $data;
+        }
+
+        $response = array_merge($response, $extra);
 
         return Response::json($response, ApiResponseStatusCodeMapper::getHttpCode($status));
     }
