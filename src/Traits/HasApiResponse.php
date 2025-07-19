@@ -83,6 +83,7 @@ trait HasApiResponse
     protected function serverErrorResponse(\Throwable $th = null, ?string $message = CommonTranslationKeys::SERVER_ERROR): JsonResponse
     {
         // Optionally log $th
+        $this->info($th);
         return $this->apiResponse(false, ApiResponseStatusEnum::SERVER_ERROR, null, [], $message);
     }
     protected function misconfiguredResponse(?string $message = CommonTranslationKeys::MISCONFIGURED): JsonResponse
