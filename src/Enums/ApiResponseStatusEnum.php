@@ -1,0 +1,17 @@
+<?php
+
+namespace Corekit\Enums;
+
+enum ApiResponseStatusEnum: string
+{
+    case SUCCESS = 'SUCCESS';
+    case VALIDATION_FAILED = 'VALIDATION_FAILED';
+    case NOT_FOUND = 'NOT_FOUND';
+    case UNAUTHORIZED = 'UNAUTHORIZED';
+    case FORBIDDEN = 'FORBIDDEN';
+    case CONFLICT = 'CONFLICT';
+    case BAD_REQUEST = 'BAD_REQUEST';
+    case SERVER_ERROR = 'SERVER_ERROR';
+    case OPERATION_FAILED = 'OPERATION_FAILED';
+    case OPERATION_NOT_COMPLETED = 'OPERATION_NOT_COMPLETED';
+}
