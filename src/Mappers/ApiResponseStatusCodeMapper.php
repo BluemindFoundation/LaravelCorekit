@@ -23,6 +23,7 @@ class ApiResponseStatusCodeMapper
                 ApiResponseStatusEnum::OPERATION_FAILED,
                 ApiResponseStatusEnum::OPERATION_NOT_COMPLETED => 400,
                 ApiResponseStatusEnum::SERVER_ERROR => 500,
+                ApiResponseStatusEnum::MISCONFIGURED => 500,
             };
     }
 }

@@ -18,4 +18,5 @@ class CommonTranslationKeys
     public const FORBIDDEN = 'forbidden';
     public const BAD_REQUEST = 'bad_request';
     public const VALIDATION_FAILED = 'validation_failed';
+    public const MISCONFIGURED = 'MISCONFIGURED';
 }
