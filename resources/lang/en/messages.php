@@ -1,5 +1,15 @@
 <?php
 
-use Corekit\Utils\CorekitLangLoader;
+return array_merge(
+    [
+        'bluemindfoundation' => 'Bluemind Foundation',
+    ],
+    require 'common_expressions.php',
+    // require 'mail_expressions.php'
+);
 
-return CorekitLangLoader::load(__DIR__);
+// <?php
+
+// use Corekit\Utils\CorekitLangLoader;
+
+// return CorekitLangLoader::load(__DIR__);
