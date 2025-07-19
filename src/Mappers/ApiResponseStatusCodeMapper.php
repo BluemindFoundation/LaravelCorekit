@@ -4,7 +4,7 @@ namespace Corekit\Mappers;
 
 use Corekit\Enums\ApiResponseStatusEnum;
 
-class ApiResponseStatusEnumCodeMapper
+class ApiResponseStatusCodeMapper
 {
     public static bool $forceHttp200 = false;
 

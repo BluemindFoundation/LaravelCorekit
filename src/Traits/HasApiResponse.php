@@ -4,7 +4,7 @@ namespace Corekit\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Corekit\Enums\ApiResponseStatusEnum;
-use Corekit\Mappers\ApiResponseStatusEnumCodeMapper;
+use Corekit\Mappers\ApiResponseStatusCodeMapper;
 use Corekit\Utils\TranslatorUtil;
 use Illuminate\Support\Facades\Response;
 
@@ -27,7 +27,7 @@ HasApiResponse
             'data' => $data,
         ], $extra);
 
-        return Response::json($response, ApiResponseStatusEnumCodeMapper::getHttpCode($status));
+        return Response::json($response, ApiResponseStatusCodeMapper::getHttpCode($status));
     }
 
     protected function successResponse(mixed $data = [], ?string $message = null): JsonResponse
