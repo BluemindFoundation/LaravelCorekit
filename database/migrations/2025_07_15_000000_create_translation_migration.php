@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->ulid()->primary();
-            $table->string('table_name');
-            $table->string('row_id');
-            $table->string('column_name');
+            $table->string('table_name', 100);
+            $table->string('row_id', 100);
+            $table->string('column_name', 100);
             $table->string('locale', 10);
             $table->text('value');
             $table->timestamps();
