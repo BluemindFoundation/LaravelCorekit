@@ -47,42 +47,42 @@ trait HasApiResponse
 
     protected function notCompletedResponse(?string $message = CommonTranslationKeys::OPERATION_NOT_COMPLETED): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::OPERATION_NOT_COMPLETED, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::OPERATION_NOT_COMPLETED, null, [], $message);
     }
 
     protected function notFoundResponse(?string $message = CommonTranslationKeys::NOT_FOUND): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::NOT_FOUND, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::NOT_FOUND, null, [], $message);
     }
 
     protected function unauthorizedResponse(?string $message = CommonTranslationKeys::UNAUTHORIZED): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::UNAUTHORIZED, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::UNAUTHORIZED, null, [], $message);
     }
 
     protected function forbiddenResponse(?string $message = CommonTranslationKeys::FORBIDDEN): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::FORBIDDEN, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::FORBIDDEN, null, [], $message);
     }
 
     protected function conflictResponse(?string $message = CommonTranslationKeys::CONFLICT): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::CONFLICT, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::CONFLICT, null, [], $message);
     }
 
     protected function badRequestResponse(?string $message = CommonTranslationKeys::BAD_REQUEST): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::BAD_REQUEST, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::BAD_REQUEST, null, [], $message);
     }
 
     protected function validationFailedResponse(array $errors = [], ?string $message = CommonTranslationKeys::VALIDATION_FAILED): JsonResponse
     {
-        return $this->apiResponse(false, ApiResponseStatusEnum::VALIDATION_FAILED, [], ['errors' => $errors], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::VALIDATION_FAILED, null, ['errors' => $errors], $message);
     }
 
     protected function serverErrorResponse(\Throwable $th = null, ?string $message = CommonTranslationKeys::SERVER_ERROR): JsonResponse
     {
         // Optionally log $th
-        return $this->apiResponse(false, ApiResponseStatusEnum::SERVER_ERROR, [], [], $message);
+        return $this->apiResponse(false, ApiResponseStatusEnum::SERVER_ERROR, null, [], $message);
     }
 }
