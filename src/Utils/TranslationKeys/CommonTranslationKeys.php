@@ -6,6 +6,7 @@ class CommonTranslationKeys
 {
     public const OPERATION_SUCCESS = 'operation_success';
     public const OPERATION_FAILURE = 'operation_failure';
+    public const OPERATION_NOT_COMPLETED = 'operation_not_completed';
     public const SERVER_ERROR = 'server_error';
     public const NOT_FOUND = 'not_found';
     public const VALIDATION_ERROR = 'validation_error';
