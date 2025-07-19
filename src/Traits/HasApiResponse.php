@@ -18,7 +18,7 @@ trait HasApiResponse
         array $extra = [],
         ?string $customMessage = null
     ): JsonResponse {
-        $message = $customMessage ?? TranslatorUtil::message($status->value);
+        $message = $customMessage ? TranslatorUtil::message($customMessage) : $status->value;
 
         $response = [
             'status' => $status->value,
