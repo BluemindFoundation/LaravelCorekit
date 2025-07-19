@@ -21,8 +21,8 @@ trait HasApiResponse
         $message = $customMessage ?? TranslatorUtil::message($status->value);
 
         $response = array_merge([
-            'success' => $success,
             'status' => $status->value,
+            'success' => $success,
             'message' => $message,
             'data' => $data,
         ], $extra);
