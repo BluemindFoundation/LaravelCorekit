@@ -5,6 +5,7 @@ namespace Corekit\Traits;
 use Illuminate\Http\JsonResponse;
 use Corekit\Enums\ApiResponseStatusEnum;
 use Corekit\Mappers\ApiResponseStatusCodeMapper;
+use Corekit\Utils\TranslationKeys\CommonTranslationKeys;
 use Corekit\Utils\TranslatorUtil;
 use Illuminate\Support\Facades\Response;
 
@@ -18,6 +19,7 @@ HasApiResponse
         array $extra = [],
         ?string $customMessage = null
     ): JsonResponse {
+        // dd($customMessage);
         $message = $customMessage ?? TranslatorUtil::message($status->value);
 
         $response = array_merge([
@@ -30,7 +32,7 @@ HasApiResponse
         return Response::json($response, ApiResponseStatusCodeMapper::getHttpCode($status));
     }
 
-    protected function successResponse(mixed $data = [], ?string $message = null): JsonResponse
+    protected function successResponse(mixed $data = [], ?string $message = CommonTranslationKeys::OPERATION_SUCCESS): JsonResponse
     {
         return $this->apiResponse(true, ApiResponseStatusEnum::SUCCESS, $data, [], $message);
     }
