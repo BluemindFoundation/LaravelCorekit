@@ -4,7 +4,7 @@ namespace Corekit\Enums;
 
 enum ApiResponseStatusEnum: string
 {
-    case SUCCESS = 'SUCCESS';
+    case SUCCESS = 'OPERATION_SUCCESS';
     case VALIDATION_FAILED = 'VALIDATION_FAILED';
     case NOT_FOUND = 'NOT_FOUND';
     case UNAUTHORIZED = 'UNAUTHORIZED';
