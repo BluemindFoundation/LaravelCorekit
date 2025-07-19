@@ -84,6 +84,7 @@ trait HasApiResponse
     {
         // Optionally log $th
         $this->info($th);
+        dd($th);
         return $this->apiResponse(false, ApiResponseStatusEnum::SERVER_ERROR, null, [], $message);
     }
     protected function misconfiguredResponse(?string $message = CommonTranslationKeys::MISCONFIGURED): JsonResponse
