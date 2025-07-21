@@ -7,6 +7,7 @@ use Corekit\Macros\ResponseMacros;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Corekit\Contracts\HttpClientInterface;
+use Corekit\Contracts\ApiRenderableException;
 
 class CorekitServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,11 @@ class CorekitServiceProvider extends ServiceProvider
             __DIR__ . '/../config/microservice-auth.php',
             'microservice-auth'
         );
+
+        // Exception Handler
+        $this->app->make('Illuminate\Contracts\Debug\ExceptionHandler')->renderable(function (ApiRenderableException $e) {
+            return $e->toApiResponse();
+        });
     }
 
     public function register(): void
