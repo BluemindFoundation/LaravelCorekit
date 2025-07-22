@@ -5,7 +5,7 @@ namespace Corekit\Enums;
 enum OTPTypeEnum: string
 {
     case AUTHENTICATION = 'authentication';
-    case PASSWORD_RESET = 'reset-password';
+    case PASSWORD_RESET = 'password-reset';
     case PROFILE_UPDATE = 'profile-update';
 
     public static function fromString(string $value): self
