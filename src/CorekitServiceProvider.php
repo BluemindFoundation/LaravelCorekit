@@ -6,8 +6,10 @@ use Corekit\Services\HttpClient;
 use Corekit\Macros\ResponseMacros;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use Corekit\Services\TranslationService;
 use Corekit\Contracts\HttpClientInterface;
 use Corekit\Contracts\ApiRenderableException;
+use Corekit\Contracts\TranslationServiceInterface;
 
 class CorekitServiceProvider extends ServiceProvider
 {
@@ -52,7 +54,7 @@ class CorekitServiceProvider extends ServiceProvider
         $this->app->singleton(HttpClientInterface::class, function ($app) {
             return new HttpClient();
         });
-
+        $this->app->bind(TranslationServiceInterface::class, TranslationService::class);
         $this->app->alias(HttpClientInterface::class, 'corekit.httpclient');
     }
 }
