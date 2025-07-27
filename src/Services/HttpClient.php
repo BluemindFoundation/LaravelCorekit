@@ -71,7 +71,7 @@ class HttpClient implements HttpClientInterface
                     ];
                 }
 
-                $errorMessage = "HTTP request failed with status {$response->status()}";
+                $errorMessage = "[HttpClient] Failed response body: {$response->body()}";
                 Log::warning("[HttpClient] $errorMessage");
             } catch (RequestException | Throwable $e) {
                 $errorMessage = "HTTP request exception: " . $e->getMessage();
