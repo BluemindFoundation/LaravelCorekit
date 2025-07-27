@@ -19,10 +19,10 @@ trait HasApiResponse
         ?string $customMessage = null
     ): JsonResponse {
         $message = $customMessage ? TranslatorUtil::message($customMessage) : $status->value;
-
+        $statusCode = ApiResponseStatusCodeMapper::getStatusCode($status);
         $response = [
-            'status' => $status->value,
             'success' => $success,
+            'status_code' => $statusCode,
             'message' => $message,
         ];
 
@@ -32,7 +32,7 @@ trait HasApiResponse
 
         $response = array_merge($response, $extra);
 
-        return Response::json($response, ApiResponseStatusCodeMapper::getHttpCode($status));
+        return Response::json($response);
     }
 
     protected function successResponse(mixed $data = [], ?string $message = CommonTranslationKeys::OPERATION_SUCCESS): JsonResponse
