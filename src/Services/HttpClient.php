@@ -70,7 +70,6 @@ class HttpClient implements HttpClientInterface
                         'error' => null,
                     ];
                 }
-                dd($response);
 
                 $errorMessage = "HTTP request failed with status {$response->status()}";
                 Log::warning("[HttpClient] $errorMessage");
