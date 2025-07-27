@@ -20,9 +20,20 @@ class HttpClient implements HttpClientInterface
         $this->maxRetries = $maxRetries;
     }
 
-    public function request(string $method, string $url, array $options = []): ?array
+    /**
+     * Make a synchronous HTTP request.
+     *
+     * @param string $method
+     * @param string $url
+     * @param array $options
+     * @return array{status: int|null, data: mixed, error: string|null}
+     */
+    public function request(string $method, string $url, array $options = []): array
     {
         $attempt = 0;
+        $errorMessage = null;
+        $status = null;
+        $data = null;
 
         do {
             $attempt++;
@@ -48,27 +59,38 @@ class HttpClient implements HttpClientInterface
                     default => throw new \InvalidArgumentException("HTTP method $method not supported"),
                 };
 
-                // 🪵 Log détaillé
-                Log::info("[HttpClient] Attempt #$attempt - URL: $url");
-                Log::info("[HttpClient] Status: {$response->status()}");
-                Log::info("[HttpClient] Response Body: " . $response->body());
+                $status = $response->status();
+                $data = $response->json();
+                $errorMessage = $response->successful() ? null : $response->body();
 
-                if ($response->successful()) {
-                    return $response->json();
+                // Logging
+                Log::info("[HttpClient] Attempt #$attempt - $method $url");
+                Log::info("[HttpClient] Status: $status");
+                Log::info("[HttpClient] Body: " . $response->body());
+
+                // On success or client error (stop retrying if 4xx)
+                if ($response->successful() || $response->status() < 500) {
+                    break;
                 }
-
-                Log::warning("HTTP request to $url failed with status {$response->status()}");
             } catch (RequestException | Throwable $e) {
-                Log::error("HTTP request exception to $url: " . $e->getMessage());
+                $errorMessage = $e->getMessage();
+                Log::error("[HttpClient] Exception on attempt #$attempt to $url: $errorMessage");
             }
 
-            sleep($attempt ** 2); // retry delay
+            sleep($attempt ** 2); // exponential backoff
+
         } while ($attempt < $this->maxRetries);
 
-        return null;
+        return [
+            'status' => $status,
+            'data' => $data,
+            'error' => $errorMessage,
+        ];
     }
 
-
+    /**
+     * Make an asynchronous HTTP request (not awaited).
+     */
     public function requestAsync(string $method, string $url, array $options = [])
     {
         $request = Http::timeout($this->timeout);
