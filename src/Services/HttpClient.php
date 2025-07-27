@@ -48,20 +48,26 @@ class HttpClient implements HttpClientInterface
                     default => throw new \InvalidArgumentException("HTTP method $method not supported"),
                 };
 
+                // 🪵 Log détaillé
+                Log::info("[HttpClient] Attempt #$attempt - URL: $url");
+                Log::info("[HttpClient] Status: {$response->status()}");
+                Log::info("[HttpClient] Response Body: " . $response->body());
+
                 if ($response->successful()) {
                     return $response->json();
                 }
 
                 Log::warning("HTTP request to $url failed with status {$response->status()}");
             } catch (RequestException | Throwable $e) {
-                Log::error("HTTP request exception: " . $e->getMessage());
+                Log::error("HTTP request exception to $url: " . $e->getMessage());
             }
 
-            sleep($attempt ** 2);
+            sleep($attempt ** 2); // retry delay
         } while ($attempt < $this->maxRetries);
 
         return null;
     }
+
 
     public function requestAsync(string $method, string $url, array $options = [])
     {
