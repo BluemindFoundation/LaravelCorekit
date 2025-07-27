@@ -6,7 +6,7 @@ use Corekit\Enums\ApiResponseStatusEnum;
 
 class ApiResponseStatusCodeMapper
 {
-    public static bool $forceHttp200 = false;
+    public static bool $forceHttp200 = true;
 
     public static function getHttpCode(ApiResponseStatusEnum $status): int
     {
