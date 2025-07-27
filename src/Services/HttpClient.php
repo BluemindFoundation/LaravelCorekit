@@ -122,15 +122,13 @@ class HttpClient implements HttpClientInterface
                         'success' => true,
                         'status' => $response->status(),
                         'data' => $response->json(),
-                        'error' => null,
                     ];
                 }
 
                 return [
                     'success' => false,
                     'status' => $response->status(),
-                    'data' => null,
-                    'error' => "HTTP request failed with status {$response->status()}",
+                    'error' => "[HttpClient] Failed response body: {$response->body()}",
                 ];
             },
             function (Throwable $e) use ($method, $url) {
@@ -140,7 +138,6 @@ class HttpClient implements HttpClientInterface
                 return [
                     'success' => false,
                     'status' => 0,
-                    'data' => null,
                     'error' => $errorMsg,
                 ];
             }
