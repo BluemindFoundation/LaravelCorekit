@@ -66,7 +66,6 @@ class HttpClient implements HttpClientInterface
                     return [
                         'success' => true,
                         'status' => $response->status(),
-                        'error' => null,
                         'data' => $response->json(),
                     ];
                 }
@@ -85,7 +84,6 @@ class HttpClient implements HttpClientInterface
             'success' => false,
             'status' => 0,
             'error' => $errorMessage,
-            'data' => null,
         ];
     }
 
