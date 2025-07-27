@@ -11,11 +11,8 @@ use Illuminate\Support\ServiceProvider;
 use Corekit\Services\TranslationService;
 use Illuminate\Support\Facades\Response;
 use Corekit\Contracts\HttpClientInterface;
-use Illuminate\Auth\AuthenticationException;
 use Corekit\Contracts\ApiRenderableException;
 
-use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Corekit\Contracts\TranslationServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
