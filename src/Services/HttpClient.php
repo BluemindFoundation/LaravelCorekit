@@ -21,19 +21,19 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * Make a synchronous HTTP request.
-     *
-     * @param string $method
-     * @param string $url
-     * @param array $options
-     * @return array{status: int|null, data: mixed, error: string|null}
+     * Synchronous HTTP request.
+     * Returns a standardized array:
+     * [
+     *    'success' => bool,
+     *    'status' => int,
+     *    'data' => array|null,
+     *    'error' => string|null,
+     * ]
      */
     public function request(string $method, string $url, array $options = []): array
     {
         $attempt = 0;
         $errorMessage = null;
-        $status = null;
-        $data = null;
 
         do {
             $attempt++;
@@ -59,37 +59,40 @@ class HttpClient implements HttpClientInterface
                     default => throw new \InvalidArgumentException("HTTP method $method not supported"),
                 };
 
-                $status = $response->status();
-                $data = $response->json();
-                $errorMessage = $response->successful() ? null : $response->body();
-
-                // Logging
                 Log::info("[HttpClient] Attempt #$attempt - $method $url");
-                Log::info("[HttpClient] Status: $status");
-                Log::info("[HttpClient] Body: " . $response->body());
+                Log::info("[HttpClient] Status: {$response->status()}");
+                Log::info("[HttpClient] Response: " . $response->body());
 
-                // On success or client error (stop retrying if 4xx)
-                if ($response->successful() || $response->status() < 500) {
-                    break;
+                if ($response->successful()) {
+                    return [
+                        'success' => true,
+                        'status' => $response->status(),
+                        'data' => $response->json(),
+                        'error' => null,
+                    ];
                 }
+
+                $errorMessage = "HTTP request failed with status {$response->status()}";
+                Log::warning("[HttpClient] $errorMessage");
             } catch (RequestException | Throwable $e) {
-                $errorMessage = $e->getMessage();
-                Log::error("[HttpClient] Exception on attempt #$attempt to $url: $errorMessage");
+                $errorMessage = "HTTP request exception: " . $e->getMessage();
+                Log::error("[HttpClient] $errorMessage");
             }
 
-            sleep($attempt ** 2); // exponential backoff
-
+            sleep($attempt ** 2);
         } while ($attempt < $this->maxRetries);
 
         return [
-            'status' => $status,
-            'data' => $data,
+            'success' => false,
+            'status' => 0,
+            'data' => null,
             'error' => $errorMessage,
         ];
     }
 
     /**
-     * Make an asynchronous HTTP request (not awaited).
+     * Asynchronous HTTP request.
+     * Returns a Promise resolving to the same standardized array.
      */
     public function requestAsync(string $method, string $url, array $options = [])
     {
@@ -103,7 +106,7 @@ class HttpClient implements HttpClientInterface
             $request = $request->withOptions(['query' => $options['query']]);
         }
 
-        return match (strtoupper($method)) {
+        $promise = match (strtoupper($method)) {
             'GET' => $request->async()->get($url),
             'POST' => $request->async()->post($url, $options['json'] ?? []),
             'PUT' => $request->async()->put($url, $options['json'] ?? []),
@@ -111,5 +114,39 @@ class HttpClient implements HttpClientInterface
             'DELETE' => $request->async()->delete($url, $options['json'] ?? []),
             default => throw new \InvalidArgumentException("HTTP method $method not supported"),
         };
+
+        return $promise->then(
+            function (Response $response) use ($method, $url) {
+                Log::info("[HttpClient][Async] $method $url Status: {$response->status()}");
+                Log::info("[HttpClient][Async] Response: " . $response->body());
+
+                if ($response->successful()) {
+                    return [
+                        'success' => true,
+                        'status' => $response->status(),
+                        'data' => $response->json(),
+                        'error' => null,
+                    ];
+                }
+
+                return [
+                    'success' => false,
+                    'status' => $response->status(),
+                    'data' => null,
+                    'error' => "HTTP request failed with status {$response->status()}",
+                ];
+            },
+            function (Throwable $e) use ($method, $url) {
+                $errorMsg = "HTTP request exception: " . $e->getMessage();
+                Log::error("[HttpClient][Async] $method $url Error: $errorMsg");
+
+                return [
+                    'success' => false,
+                    'status' => 0,
+                    'data' => null,
+                    'error' => $errorMsg,
+                ];
+            }
+        );
     }
 }
