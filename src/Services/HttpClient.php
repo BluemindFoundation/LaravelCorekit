@@ -62,7 +62,7 @@ class HttpClient implements HttpClientInterface
                 Log::info("[HttpClient] Attempt #$attempt - $method $url");
                 Log::info("[HttpClient] Status: {$response->status()}");
                 Log::info("[HttpClient] Response: " . $response->body());
-
+                dd($response);
                 if ($response->successful()) {
                     return [
                         'success' => true,
