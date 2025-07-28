@@ -14,7 +14,7 @@ class HttpClient implements HttpClientInterface
     protected int $timeout;
     protected int $maxRetries;
 
-    public function __construct(int $timeout = 5, int $maxRetries = 3)
+    public function __construct(int $timeout = 5, int $maxRetries = 1)
     {
         $this->timeout = $timeout;
         $this->maxRetries = $maxRetries;

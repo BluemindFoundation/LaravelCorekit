@@ -64,16 +64,16 @@ class CorekitServiceProvider extends ServiceProvider
             ], 'corekit-translations');
 
             $this->publishes([
-                __DIR__ . '/../config/microservice-auth.php' => App::configPath('microservice-auth.php'),
-            ], 'corekit-microservice-auth-config');
+                __DIR__ . '/../config/Gateway-auth.php' => App::configPath('Gateway-auth.php'),
+            ], 'corekit-Gateway-auth-config');
         }
     }
 
     protected function mergeConfiguration(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/microservice-auth.php',
-            'microservice-auth'
+            __DIR__ . '/../config/Gateway-auth.php',
+            'Gateway-auth'
         );
     }
 

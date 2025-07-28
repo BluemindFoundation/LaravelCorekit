@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Config;
 
-class VerifyMicroserviceSecretKey
+class VerifyGatewaySecretKey
 {
     use HasApiResponse;
 
@@ -22,8 +22,8 @@ class VerifyMicroserviceSecretKey
         }
 
         // 2. Lire la config via Facades
-        $authServiceUrl = Config::get('microservice-auth.auth_service_url');
-        $serviceSecretKey = Config::get('microservice-auth.service_secret_key');
+        $authServiceUrl = Config::get('Gateway-auth.auth_service_url');
+        $serviceSecretKey = Config::get('Gateway-auth.service_secret_key');
 
         if (!$authServiceUrl || !$serviceSecretKey) {
             return $this->misconfiguredResponse('Auth service URL or service secret key not configured');
