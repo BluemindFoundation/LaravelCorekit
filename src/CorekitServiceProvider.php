@@ -33,14 +33,14 @@ class CorekitServiceProvider extends ServiceProvider
 
             // Publish config file (optional)
             $this->publishes([
-                __DIR__ . '/../config/microservice-auth.php' => App::configPath('microservice-auth.php'),
-            ], 'corekit-microservice-auth-config');
+                __DIR__ . '/../config/gateway-auth.php' => App::configPath('gateway-auth.php'),
+            ], 'corekit-gateway-auth-config');
         }
 
         // Merge config automatically, whether published or not
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/microservice-auth.php',
-            'microservice-auth'
+            __DIR__ . '/../config/gateway-auth.php',
+            'gateway-auth'
         );
 
         // Exception Handler

@@ -80,7 +80,7 @@ class CorekitServiceProvider extends ServiceProvider
     protected function registerExceptionHandling(): void
     {
         // 🧠 Use Config::get() instead of the helper because helpers aren't always available in packages
-        $enabled = Config::get('microservice-auth.api_exception_handling.enabled', true);
+        $enabled = Config::get('gateway-auth.api_exception_handling.enabled', true);
         $isDebug = Config::get('app.debug', false);
 
         // Disable in debug mode or via config
