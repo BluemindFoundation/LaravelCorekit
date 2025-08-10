@@ -13,8 +13,11 @@ class ArrayFilterUtil
      */
     public static function removeEmptyValues(array $array): array
     {
-        return array_filter($array, function ($value) {
-            return !is_null($value) && $value !== '';
+        return array_filter($array, static function ($value) {
+            if ($value === null) return false;
+            if (is_array($value)) return count($value) > 0;
+            if (is_string($value)) return trim($value) !== '';
+            return true;
         });
     }
 }
