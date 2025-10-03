@@ -5,7 +5,7 @@ namespace Corekit\Enums;
 enum MessageMethodEnum: string
 {
     case SMS = 'sms';
-    case MAIL = 'mail';
+    case MAIL = 'email';
     case WHATSAPP = 'whatsapp';
 
     static function fromString(?string $value): ?MessageMethodEnum
